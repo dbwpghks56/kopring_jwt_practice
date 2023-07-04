@@ -1,7 +1,9 @@
 package com.jwt.test.jwtoauth2.user.domain.model
 
+import com.jwt.test.jwtoauth2.auth.domain.model.Role
 import com.jwt.test.jwtoauth2.auth.role.ERole
 import com.jwt.test.jwtoauth2.boot.domain.model.BaseEntity
+import net.minidev.json.annotate.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -14,6 +16,13 @@ class User(
     val email:String? = null,
     val password:String? = null,
     val name:String? = null,
-    val eRole: ERole? = null,
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "tb_user_role",
+        joinColumns = [JoinColumn(name = "user_seq")],
+        inverseJoinColumns = [JoinColumn(name = "role_name")]
+    )
+    val roles: Set<Role> = HashSet()
 ):BaseEntity() {
 }

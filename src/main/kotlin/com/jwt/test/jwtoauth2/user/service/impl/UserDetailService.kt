@@ -17,14 +17,7 @@ class UserDetailService(
             throw UsernameNotFoundException("해당유저를 찾을 수 없습니다.")
         }
 
-        val userDetailsImpl: UserDetailsImpl = UserDetailsImpl(
-            seq = user.seq,
-            userName = user.userName,
-            email = user.email,
-            password = user.password,
-            name = user.name,
-            eRole = user.eRole,
-        )
+        val userDetailsImpl: UserDetailsImpl = user.toUserDetailsImpl()
 
         return userDetailsImpl
     }
